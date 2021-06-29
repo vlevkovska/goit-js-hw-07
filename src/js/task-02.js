@@ -10,6 +10,8 @@ for (let i = 0; i < ingredients.length; i += 1) {
 }
 console.log(elements);
 
+//===== ИЛИ ЧЕРЕЗ MAP =====
+
 // const elements = ingredients.map(option => {
 //   const itemEl = document.createElement('li');
 //   itemEl.textContent = option;

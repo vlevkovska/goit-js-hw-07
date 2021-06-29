@@ -12,3 +12,22 @@ const images = [
     alt: 'Group of Horses Running',
   },
 ];
+
+const paletteContainer = document.querySelector('#gallery');
+const cardsMarkup = createImages(images);
+
+paletteContainer.insertAdjacentHTML('beforeend', cardsMarkup);
+
+function createImages(images) {
+  return images
+    .map(({ url, alt }) => {
+      return `<li>
+    <img
+      src="${url}"
+      alt="${alt}"
+    />
+  </a>
+</li>`;
+    })
+    .join('');
+}
