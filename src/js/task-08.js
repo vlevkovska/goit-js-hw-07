@@ -1,34 +1,44 @@
+let input = document.querySelector("#controls").firstElementChild;
 let render = document.querySelector('[data-action="render"]');
 let destroy = document.querySelector('[data-action="destroy"]');
 let boxes = document.querySelector('#boxes');
-let control = document.querySelector('#controls input');
-let amount = '';
 
-function getAmount() {
-  let amount = control.value;
-  console.log(amount);
-  createBoxes(amount);
-}
+const createRandomRGBcolor = () =>
+  "rgb(" +
+  Math.floor(Math.random() * 256) +
+  "," +
+  Math.floor(Math.random() * 256) +
+  "," +
+  Math.floor(Math.random() * 256) +
+  ")";
 
-function createBoxes(amount) {
-  let basicSize = 30;
-  let fragment = document.createDocumentFragment();
-  for (let i = 0; i < amount; i++) {
-    let size = basicSize + i * 10;
-    let div = document.createElement('div');
-    div.style.cssText = `width: ${size}px; height: ${size}px; background-color: rgba( ${random()} , ${random()} , ${random()} )`;
-    fragment.appendChild(div);
-  }
-  boxes.appendChild(fragment);
-}
+let prevAmount = 0;
+
+function createBoxes() {
+ const divsArr = [];
+ const amount = parseInt(input.value);
+ if (amount > parseInt(input.min) && amount <= parseInt(input.max)) {
+   let i = prevAmount;
+   for (i; i < amount + prevAmount; i++) {
+     divsArr.push(
+      `<div style="background-color:${createRandomRGBcolor()}; width:${
+        30 + i * 10
+      }px; height:${30 + i * 10}px; margin:10px"></div>`
+    );
+ }
+  
+prevAmount = i;
+
+const divsStr = divsArr.join("");
+boxes.insertAdjacentHTML("beforeend", divsStr);
+   } else {
+     boxes.insertAdjacentHTML("afterbegin", "Please, enter number from 1 to 100");
+   }
+  };
+  
 function destroyBoxes() {
   boxes.innerHTML = ''; // Очистить
 }
-function random() {
-  return Math.random() * 256; // рандомний цвет
-}
-function plusAmount() {
-  getAmount();
-}
-render.addEventListener('click', getAmount);
+
+render.addEventListener('click', createBoxes);
 destroy.addEventListener('click', destroyBoxes);
